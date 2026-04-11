@@ -18,3 +18,17 @@ API for space mission simulation integrating external APIs. This project is deve
 ## Status
 
 In development (Day 1)
+## API Functionality
+
+### /weather/launch-risk
+
+This endpoint evaluates launch risk using real-time weather data from an external API.
+
+It considers:
+- Temperature
+- Wind speed
+
+Based on these values, it classifies risk as:
+- Low
+- Medium
+- High
