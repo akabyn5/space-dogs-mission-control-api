@@ -63,5 +63,33 @@ def launch_risk():
         "launch_risk": risk
     })
 
+@app.route("/launch-decision")
+def decision():
+    city = request.args.get("city", "Panama")
+
+    if not API_KEY:
+        return jsonify({"error": "API key not configured"}), 500
+
+    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric"
+    
+    response = requests.get(url)
+    data = response.json()
+
+    if response.status_code != 200 or "main" not in data:
+        return jsonify({"error": "Failed to fetch weather data"}), 500
+
+    wind = data["wind"]["speed"]
+
+    if wind > 20:
+        decision = "NO GO"
+    else:
+        decision = "GO"
+
+    return jsonify({
+        "city": city,
+        "decision": decision
+    })
+
 if __name__ == "__main__":
     app.run(debug=True)
+
