@@ -13,6 +13,13 @@ def status():
         "service": "Space Dogs Mission Control API"
     })
 
+@app.route("/status/detailed")
+def detailed_status():
+    return jsonify({
+        "api_status": "running",
+        "weather_api": "connected" if API_KEY else "not_configured"
+    })
+
 @app.route("/weather/launch-risk")
 def launch_risk():
     city = request.args.get("city", "Panama")
