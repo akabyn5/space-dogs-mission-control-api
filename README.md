@@ -124,3 +124,220 @@ Submit a link to your **GitHub Repository** with your implementation.
   "launch_risk": "medium"
 }
 
+SUBMISSION SUPPORT (API)**  
+**Date:** April 12, 2026  
+**Responsible:** Backend (José)  
+**Objective:** Turn the functional API into a direct input for geneability.
+
+---
+
+### 1. BLOCK OBJECTIVE
+
+The purpose of this block is **not** to develop complex new features, but to:
+
+- Consolidate the existing endpoints as usable products
+- Facilitate their consumption for submissions
+- Clearly expose the API’s behavior
+- (Optional) Add one low-risk additional endpoint to expand use cases
+
+Any modification outside this scope introduces unnecessary risk.
+
+---
+
+### 2. REQUIRED CURRENT STATE OF THE API
+
+Before proceeding, the API must meet the following conditions:
+
+- `/status` endpoint operational
+- `/status/detailed` endpoint operational
+- `/weather/launch-risk` endpoint working with a real API
+- Error handling implemented (no crashes)
+- Use of environment variable for the API key (`OPENWEATHER_KEY`)
+
+If any of these conditions are not met, do not proceed.
+
+---
+
+### 3. PREPARING THE API FOR SUBMISSIONS
+
+The backend must deliver structured information for external consumption. This involves:
+
+#### 3.1 Main Documented Endpoint
+
+The key endpoint is:
+
+`/weather/launch-risk?city=Panama`
+
+It must guarantee:
+
+- Consistent JSON response format
+- Present fields:
+  - `city`
+  - `temperature`
+  - `wind_speed`
+  - `launch_risk`
+
+#### 3.2 Error Behavior
+
+It must respond correctly in the following cases:
+
+- Invalid city → returns JSON with `"error"` and `"details"`
+- Missing API key → `"API key not configured"`
+- Network failure → `"Request failed"`
+
+This is critical to avoid failures during demonstrations.
+
+---
+
+### 4. TECHNICAL DELIVERABLES FOR SUBMISSIONS
+
+The backend must provide exactly the following elements:
+
+#### 4.1 Functional Endpoint
+
+Example request:
+
+`/weather/launch-risk?city=Panama`
+
+Example real response:
+
+```json
+{
+  "city": "Panama",
+  "temperature": 28.18,
+  "wind_speed": 3.21,
+  "launch_risk": "low"
+}
+```
+
+#### 4.2 Technical Description of the Endpoint
+
+Minimum definition:
+
+> “This endpoint integrates the OpenWeather API to evaluate rocket launch risk based on real-time wind speed.”
+
+#### 4.3 Additional Available Endpoints
+
+- `/status`
+- `/status/detailed`
+
+These strengthen the perception of a complete system.
+
+---
+
+### 5. CONTROLLED EXTENSION (OPTIONAL)
+
+Only if the API is completely stable, one additional endpoint may be added.
+
+#### 5.1 Endpoint: `/launch-decision`
+
+**Purpose:** Translate weather data into a binary decision.
+
+**Implementation:**
+
+```python
+@app.route("/launch-decision")
+def decision():
+    city = request.args.get("city", "Panama")
+
+    if not API_KEY:
+        return jsonify({"error": "API key not configured"}), 500
+
+    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric"
+    
+    response = requests.get(url)
+    data = response.json()
+
+    if response.status_code != 200 or "main" not in data:
+        return jsonify({"error": "Failed to fetch weather data"}), 500
+
+    wind = data["wind"]["speed"]
+
+    if wind > 20:
+        decision = "NO GO"
+    else:
+        decision = "GO"
+
+    return jsonify({
+        "city": city,
+        "decision": decision
+    })
+```
+
+#### 5.2 Technical Justification
+
+- Reuses existing logic (does not introduce complexity)
+- Enables new usage approaches:
+  - Decision system
+  - Simulator
+  - Game logic
+
+---
+
+### 6. FINAL API VALIDATION
+
+Before considering the block complete, the following tests must be executed:
+
+- `/status`
+- `/status/detailed`
+- `/weather/launch-risk?city=Panama`
+- `/weather/launch-risk?city=InvalidCity123`
+- (Optional) `/launch-decision?city=Panama`
+
+**Acceptance Criteria:**
+
+- All routes respond
+- No uncontrolled errors
+- No unhandled exceptions on the server
+
+---
+
+### 7. CHANGE CONTROL (COMMITS)
+
+Progress must be recorded with clear commits:
+
+- `"feat: stabilize weather endpoint for submissions"`
+- `"feat: add detailed status endpoint"`
+- `"feat: add launch decision endpoint"` (if applicable)
+
+This provides traceability and improves repository evaluation.
+
+---
+
+### 8. CRITICAL RESTRICTIONS
+
+During this block, the following actions are **explicitly prohibited**:
+
+- Restructuring the project
+- Adding new dependencies
+- Introducing a database
+- Modifying the architecture
+- Implementing multiple new endpoints
+
+These actions do not provide immediate value and increase the risk of failure.
+
+---
+
+### 9. EXPECTED RESULT
+
+Upon completion of this block, the API must:
+
+- Be stable and demonstrable
+- Have at least 3 functional endpoints
+- Be ready to be reused in multiple submissions
+- Allow reinterpretation of the same system in different contexts
+
+---
+
+### 10. FINAL EVALUATION
+
+The backend is considered successful if it is possible to affirm:
+
+- “The API works with real data”
+- “It can be queried by city”
+- “It delivers launch risk consistently”
+- “It can be reused in multiple scenarios without additional changes”
+
+---
+
+**Ready to use for your GitHub repository or documentation.** Let me know if you need a version with emojis or a more compact format.
