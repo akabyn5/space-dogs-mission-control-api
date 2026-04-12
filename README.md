@@ -1,4 +1,6 @@
-# Space Dogs Mission Control API
+## Space Dogs Mission Control API
+
+API para simulación de misiones espaciales que integra APIs de clima para evaluar el riesgo de lanzamiento.
 
 ## Description
 API for space mission simulation integrating external APIs. This project is developed during Global Hack Week: API to simulate mission control systems using real-world data sources.
