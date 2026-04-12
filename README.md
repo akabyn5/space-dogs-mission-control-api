@@ -1,16 +1,23 @@
 ## Space Dogs Mission Control API
 
-API para simulación de misiones espaciales que integra APIs de clima para evaluar el riesgo de lanzamiento.
+API for space mission simulation that integrates weather APIs to assess launch risk.
 
 ## Description
 API for space mission simulation integrating external APIs. This project is developed during Global Hack Week: API to simulate mission control systems using real-world data sources.
 
 ## Planned Endpoints
+## Endpoints
 
-- /status → Check API health
-- /weather/launch-risk → Evaluate launch risk using weather data
-- /telemetry → Simulated spacecraft telemetry data
+### /status
+Returns the basic status of the API
 
+### /weather/launch-risk?city=Panama
+Returns:
+- temperature
+- wind speed
+- launch risk (low, medium, high)
+
+  
 ## Tech Stack
 
 - Python
@@ -34,6 +41,11 @@ Based on these values, it classifies risk as:
 - Low
 - Medium
 - High
+- 
+## Example Request
+
+GET /weather/launch-risk?city=Panama
+
 
 - # MLH Global Hack Week: APIs — Summary
 
@@ -102,4 +114,13 @@ Send a message (e.g., "Say Hello World") and get a complete response back. You c
 ## Submission Requirement
 Submit a link to your **GitHub Repository** with your implementation.
 
-## Base API URL
+
+## Example Response
+
+{
+  "city": "Panama",
+  "temperature": 29,
+  "wind_speed": 14,
+  "launch_risk": "medium"
+}
+
