@@ -4,7 +4,7 @@ import os
 
 app = Flask(__name__)
 
-API_KEY = os.getenv("OPENWEATHER_KEY")
+API_KEY = "aae3803c7ad5879b0530d73f17b067d4"
 
 @app.route("/status")
 def status():
