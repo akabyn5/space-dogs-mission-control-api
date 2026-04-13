@@ -4,7 +4,7 @@ import os
 
 app = Flask(__name__)
 
-API_KEY = "aae3803c7ad5879b0530d73f17b067d4"
+API_KEY = os.getenv("OPENWEATHER_KEY")
 
 @app.route("/status")
 def status():
@@ -88,6 +88,15 @@ def decision():
     return jsonify({
         "city": city,
         "decision": decision
+    })
+
+@app.route("/mission/status")
+def mission_status():
+    return jsonify({
+        "mission": "Space Dogs Test Mission",
+        "weather_endpoint": "/weather/launch-risk",
+        "decision_endpoint": "/launch-decision",
+        "status": "READY"
     })
 
 if __name__ == "__main__":
