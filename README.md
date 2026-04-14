@@ -7,7 +7,6 @@
 Built during **MLH Global Hack Week: APIs** — April 10–16, 2026.
 
 ---
-![WhatsApp Image 2026-04-13 at 23 29 36](https://github.com/user-attachments/assets/8da01496-e061-45ca-b4f4-52bb78fdb235)
 
 ## ✨ Project Description
 
