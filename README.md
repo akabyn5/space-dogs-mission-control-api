@@ -5,8 +5,9 @@
 **A space mission simulation API that integrates real-world weather data to assess rocket launch risk.**
 
 Built during **MLH Global Hack Week: APIs** — April 10–16, 2026.
-
 ---
+![1](https://github.com/user-attachments/assets/d5d1f940-f102-456a-ae95-436801f7040b)
+
 
 ## ✨ Project Description
 
@@ -40,6 +41,8 @@ The main endpoint. Fetches live weather data and evaluates launch risk.
 }
 ```
 
+<img width="1024" height="627" alt="2" src="https://github.com/user-attachments/assets/707ab646-99b2-4bac-9997-0268e2ada24e" />
+
 ---
 
 ## 🛠️ Tech Stack
@@ -50,6 +53,9 @@ The main endpoint. Fetches live weather data and evaluates launch risk.
 - External integration with OpenWeather API
 
 ---
+![3](https://github.com/user-attachments/assets/a4ecafd0-b243-430e-8a8d-b079f650e285)
+
+![4](https://github.com/user-attachments/assets/c8b5697b-9712-4d9e-adb4-d45eebf9bbe8)
 
 ## 📅 Project Status
 
@@ -64,6 +70,11 @@ The `/weather/launch-risk` endpoint pulls real-time weather information (tempera
 - **Low** — Safe conditions
 - **Medium** — Caution advised
 - **High** — Unsafe for launch
+
+
+<img width="1200" height="675" alt="5" src="https://github.com/user-attachments/assets/d7a53ad4-b31f-42fc-b0f9-99ee64fbd7bb" />
+
+
 
 This creates a realistic simulation of what real mission control teams evaluate before approving a launch.
 
@@ -111,6 +122,8 @@ The backend is considered successful when we can confidently say:
 - “It can be reused in multiple scenarios without further changes”
 
 ---
+![6](https://github.com/user-attachments/assets/6029742b-1825-4f76-a941-4236dcf97d4a)
+
 
 **Ready for launch!** 🌠
 
