@@ -40,7 +40,7 @@ The main endpoint. Fetches live weather data and evaluates launch risk.
   "launch_risk": "medium"
 }
 ```
-![1](https://github.com/user-attachments/assets/14f0baa7-b4ef-4688-a78b-a508c932bdb2)
+
 <img width="1024" height="627" alt="2" src="https://github.com/user-attachments/assets/707ab646-99b2-4bac-9997-0268e2ada24e" />
 
 ---
@@ -71,7 +71,7 @@ The `/weather/launch-risk` endpoint pulls real-time weather information (tempera
 - **Medium** — Caution advised
 - **High** — Unsafe for launch
 
-![4](https://github.com/user-attachments/assets/9668bd54-d7a6-44c3-9ee2-0961be1febf6)
+
 <img width="1200" height="675" alt="5" src="https://github.com/user-attachments/assets/d7a53ad4-b31f-42fc-b0f9-99ee64fbd7bb" />
 
 
