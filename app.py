@@ -24,27 +24,10 @@ def detailed_status():
 def launch_risk():
     city = request.args.get("city", "Panama")
 
-    if not API_KEY:
-        return jsonify({
-            "error": "API key not configured"
-        }), 500
+    data, error = get_weather_data(city)
 
-    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric"
-    
-    try:
-        response = requests.get(url)
-        data = response.json()
-    except Exception as e:
-        return jsonify({
-            "error": "Request failed",
-            "details": str(e)
-        }), 500
-
-    if response.status_code != 200 or "main" not in data:
-        return jsonify({
-            "error": "Failed to fetch weather data",
-            "details": data
-        }), 500
+    if error:
+        return jsonify(error), 500
 
     temp = data["main"]["temp"]
     wind = data["wind"]["speed"]
@@ -67,16 +50,10 @@ def launch_risk():
 def decision():
     city = request.args.get("city", "Panama")
 
-    if not API_KEY:
-        return jsonify({"error": "API key not configured"}), 500
+    data, error = get_weather_data(city)
 
-    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric"
-    
-    response = requests.get(url)
-    data = response.json()
-
-    if response.status_code != 200 or "main" not in data:
-        return jsonify({"error": "Failed to fetch weather data"}), 500
+    if error:
+        return jsonify(error), 500
 
     wind = data["wind"]["speed"]
 
@@ -98,6 +75,29 @@ def mission_status():
         "decision_endpoint": "/launch-decision",
         "status": "READY"
     })
+
+def get_weather_data(city):
+    if not API_KEY:
+        return None, {"error": "API key not configured"}
+
+    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric"
+    
+    try:
+        response = requests.get(url)
+        data = response.json()
+    except Exception as e:
+        return None, {
+            "error": "Request failed",
+            "details": str(e)
+        }
+
+    if response.status_code != 200 or "main" not in data:
+        return None, {
+            "error": "Failed to fetch weather data",
+            "details": data
+        }
+
+    return data, None
 
 if __name__ == "__main__":
     app.run(debug=True)
