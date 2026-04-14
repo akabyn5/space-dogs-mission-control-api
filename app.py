@@ -21,6 +21,29 @@ def detailed_status():
         "weather_api": "connected" if API_KEY else "not_configured"
     })
 
+def get_weather_data(city):
+    if not API_KEY:
+        return None, {"error": "API key not configured"}
+
+    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric"
+    
+    try:
+        response = requests.get(url)
+        data = response.json()
+    except Exception as e:
+        return None, {
+            "error": "Request failed",
+            "details": str(e)
+        }
+
+    if response.status_code != 200 or "main" not in data:
+        return None, {
+            "error": "Failed to fetch weather data",
+            "details": data
+        }
+
+    return data, None
+
 @app.route("/weather/launch-risk")
 def launch_risk():
     city = request.args.get("city", "Panama")
@@ -58,23 +81,11 @@ def decision():
 
     wind = data["wind"]["speed"]
 
-    if wind > 20:
-        decision = "NO GO"
-    else:
-        decision = "GO"
+    decision = "NO GO" if wind > 20 else "GO"
 
     return jsonify({
         "city": city,
         "decision": decision
-    })
-
-@app.route("/mission/status")
-def mission_status():
-    return jsonify({
-        "mission": "Space Dogs Test Mission",
-        "weather_endpoint": "/weather/launch-risk",
-        "decision_endpoint": "/launch-decision",
-        "status": "READY"
     })
 
 @app.route("/telemetry/simulated")
@@ -85,30 +96,42 @@ def telemetry():
         "status": "nominal"
     })
 
-def get_weather_data(city):
-    if not API_KEY:
-        return None, {"error": "API key not configured"}
+@app.route("/ai/mission-advice")
+def mission_advice():
+    city = request.args.get("city", "Panama")
 
-    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric"
-    
-    try:
-        response = requests.get(url)
-        data = response.json()
-    except Exception as e:
-        return None, {
-            "error": "Request failed",
-            "details": str(e)
-        }
+    data, error = get_weather_data(city)
 
-    if response.status_code != 200 or "main" not in data:
-        return None, {
-            "error": "Failed to fetch weather data",
-            "details": data
-        }
+    if error:
+        return jsonify(error), 500
 
-    return data, None
+    wind = data["wind"]["speed"]
+    temp = data["main"]["temp"]
 
+    if wind > 20:
+        advice = "Conditions are unsafe. High wind speeds detected. Launch is not recommended."
+    elif wind > 10:
+        advice = "Moderate risk. Evaluate carefully before launch."
+    else:
+        advice = "Conditions are favorable. Launch can proceed."
+
+    return jsonify({
+        "city": city,
+        "advice": advice,
+        "temperature": temp,
+        "wind_speed": wind
+    })
+
+@app.route("/mission/status")
+def mission_status():
+    return jsonify({
+        "mission": "Space Dogs Test Mission",
+        "weather_endpoint": "/weather/launch-risk",
+        "decision_endpoint": "/launch-decision",
+        "telemetry_endpoint": "/telemetry/simulated",
+        "ai_endpoint": "/ai/mission-advice",
+        "status": "READY"
+    })
 
 if __name__ == "__main__":
     app.run(debug=True)
-
