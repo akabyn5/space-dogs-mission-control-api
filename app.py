@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 import requests
 import os
+import random
 
 app = Flask(__name__)
 
@@ -76,6 +77,14 @@ def mission_status():
         "status": "READY"
     })
 
+@app.route("/telemetry/simulated")
+def telemetry():
+    return jsonify({
+        "altitude": random.randint(100, 400),
+        "velocity": random.randint(7000, 8000),
+        "status": "nominal"
+    })
+
 def get_weather_data(city):
     if not API_KEY:
         return None, {"error": "API key not configured"}
@@ -98,6 +107,7 @@ def get_weather_data(city):
         }
 
     return data, None
+
 
 if __name__ == "__main__":
     app.run(debug=True)
