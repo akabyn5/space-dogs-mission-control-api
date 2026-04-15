@@ -316,14 +316,6 @@ The data shown is entirely fictional and randomly generated.
 It does not represent real spacecraft telemetry.
 Its only purpose is demonstration, testing, and pure hackathon fun!
 
-Why is this “useless hack” awesome?
-Because sometimes the best way to learn is by building something playful and pointless — just to see it work!
-This endpoint brings the spirit of Global Hack Week to life: quick, visual, and instantly satisfying. Every refresh feels like checking in on a spaceship flying through the cosmos.
----
-
-
-Here’s a beautiful, engaging, and human-friendly English Markdown version:
-
 ---
 
 # 🚀 Submission 2 — AI Endpoint  
