@@ -218,9 +218,9 @@ Then it calculates temperature, wind speed, and launch risk level.
 
 #### `/launch-decision`
 ```python
-data, error = get_weather_data(city)
+{data, error = get_weather_data(city)
 if error:
-    return jsonify(error), 500
+    return jsonify(error), 500}
 ```
 Then it returns a clear **GO / NO GO** decision based on wind conditions.
 
