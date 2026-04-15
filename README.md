@@ -292,7 +292,8 @@ We’re building something great — step by step! 🚀
 🚀 Submission 1 — Telemetry
 “Build a useless hack”
 
-imagen 
+<img width="526" height="278" alt="1" src="https://github.com/user-attachments/assets/cb104b8e-05a4-40dc-9dd5-a8d0129a29ee" />
+
 
 
 When José finishes implementing the /telemetry/simulated endpoint, Maryfer takes over and does the following:
@@ -320,6 +321,56 @@ Because sometimes the best way to learn is by building something playful and poi
 This endpoint brings the spirit of Global Hack Week to life: quick, visual, and instantly satisfying. Every refresh feels like checking in on a spaceship flying through the cosmos.
 ---
 ![6](https://github.com/user-attachments/assets/6029742b-1825-4f76-a941-4236dcf97d4a)
+
+Here’s a beautiful, engaging, and human-friendly English Markdown version:
+
+---
+
+# 🚀 Submission 2 — AI Endpoint  
+**“Teach your assistant”**
+
+---
+<img width="526" height="278" alt="1" src="https://github.com/user-attachments/assets/f0078b47-4943-43d0-8b29-a50606079752" />
+<img width="883" height="304" alt="3" src="https://github.com/user-attachments/assets/8cad369c-14b6-4a2b-a81e-1d2e1bf49671" />
+
+Once the `/ai/mission-advice` endpoint is ready, **Maryfer** will:
+
+### 🎯 What to do:
+
+**Test the endpoint by visiting:**
+
+```
+http://127.0.0.1:5000/ai/mission-advice?city=Panama
+```
+
+---
+
+### ✨ What is this endpoint?
+
+The **`/ai/mission-advice`** endpoint is a smart AI-powered assistant for our Space Dogs mission.
+
+It takes real weather data for any city and transforms it into **clear, human-friendly launch recommendations**.
+
+Instead of just showing raw numbers (temperature and wind speed), the AI interprets the conditions and gives practical advice — just like a real mission control expert would.
+
+---
+
+### 📸 What Maryfer will do:
+
+- Open the endpoint in the browser with `?city=Panama`
+- Take a **nice screenshot** of the result
+- Add a clear description
+- Highlight how the AI turns climate data into understandable launch recommendations
+
+---
+
+### Why this submission rocks 🌟
+
+It’s not just another API — it’s an intelligent assistant that makes complex data feel simple and actionable.  
+
+This is where the project stops being just code and starts feeling like a real mission control tool. Turning raw weather numbers into smart advice is exactly what makes this hack fun and impressive!
+
+---
 
 
 **Ready for launch!** 🌠
