@@ -92,7 +92,7 @@ Every day brings new challenges focused on APIs, GitHub, documentation, and proj
 
 ---
 
-## 🔧 Backend Development — Block 3: Submission Support
+## 🔧 Backend Development — Submission Support
 
 **Date:** April 12, 2026  
 **Responsible:** Backend (José)
@@ -120,6 +120,175 @@ The backend is considered successful when we can confidently say:
 - “It can be queried by any city”
 - “It consistently delivers launch risk assessment”
 - “It can be reused in multiple scenarios without further changes”
+
+---
+
+# 🚀 Space Dogs Mission Control API — Refactor Documentation (Day 4)
+
+### Overview  
+Today we took a big step forward in cleaning up the backend of our **Space Dogs Mission Control API**. The main goal of Day 4 was to **remove duplicated code**, improve the overall structure, and prepare the system for future features — especially the upcoming **AI integration**.
+
+---
+
+### The Problem We Faced  
+Before the refactor, two important endpoints were doing almost the exact same work:
+
+- `/weather/launch-risk`  
+- `/launch-decision`
+
+Both were independently:
+- Calling the OpenWeather API  
+- Parsing the response  
+- Handling errors  
+
+This created unnecessary duplication and made the code harder to maintain.
+
+### Risks of the Old Approach  
+- **Code duplication** → Same logic repeated in multiple places  
+- **Inconsistent error handling** → Different behavior between endpoints  
+- **Poor scalability** → Every change had to be made in several files  
+- **Limited extensibility** → Adding new features (like AI) would mean copying the same code again  
+
+---
+
+### Our Solution  
+We **centralized** all weather-related logic into a single, clean, reusable internal function:
+
+```python
+def get_weather_data(city):
+```
+
+This function now acts as a smart **abstraction layer** between our API endpoints and the external OpenWeather service.
+
+---
+
+### Key Improvements Made
+
+#### 1. Fixed a Critical Bug  
+We corrected this incorrect line:
+
+```python
+# Before (wrong)
+API_KEY = "os.getenv("OPENWEATHER_KEY")"
+
+# After (correct)
+API_KEY = os.getenv("OPENWEATHER_KEY")
+```
+
+Now the API key is properly loaded from environment variables.
+
+#### 2. New Centralized Function  
+Here's the new `get_weather_data()` function:
+
+```python
+def get_weather_data(city):
+    if not API_KEY:
+        return None, {"error": "API key not configured"}
+    
+    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric"
+   
+    try:
+        response = requests.get(url)
+        data = response.json()
+    except Exception as e:
+        return None, {"error": "Request failed", "details": str(e)}
+    
+    if response.status_code != 200 or "main" not in data:
+        return None, {"error": "Failed to fetch weather data", "details": data}
+    
+    return data, None
+```
+
+**Behavior**:  
+- Returns `(data, None)` → when successful  
+- Returns `(None, error)` → when something goes wrong  
+
+---
+
+### Updated Endpoints  
+Both endpoints now use the new centralized function:
+
+#### `/weather/launch-risk`
+```python
+data, error = get_weather_data(city)
+if error:
+    return jsonify(error), 500
+```
+Then it calculates temperature, wind speed, and launch risk level.
+
+#### `/launch-decision`
+```python
+data, error = get_weather_data(city)
+if error:
+    return jsonify(error), 500
+```
+Then it returns a clear **GO / NO GO** decision based on wind conditions.
+
+---
+
+### Architectural Improvement  
+
+**Before:**
+```
+Endpoint → OpenWeather API
+Endpoint → OpenWeather API
+```
+
+**After:**
+```
+Endpoint → get_weather_data() → OpenWeather API
+Endpoint → get_weather_data() → OpenWeather API
+```
+
+Much cleaner, right? ✨
+
+---
+
+### Benefits Achieved  
+
+✅ **Better Maintainability** — Weather logic lives in one place only  
+✅ **Consistent Behavior** — Same error handling and data format everywhere  
+✅ **Improved Scalability** — Ready for AI, telemetry, caching, and more  
+✅ **Less Redundancy** — No more duplicated API call code  
+
+---
+
+### Validation  
+We tested everything thoroughly:
+
+- Valid request: `/weather/launch-risk?city=Panama`  
+- Decision endpoint: `/launch-decision?city=Panama`  
+- Error handling: `/weather/launch-risk?city=InvalidCity123`  
+
+All endpoints now return consistent and reliable results.
+
+---
+
+### Commit  
+```bash
+git commit -m "refactor: centralize weather API logic"
+```
+
+---
+
+### Notes for Next Steps (Maryfer) 💡  
+
+This version is now **stable and solid**. It’s ready for:  
+- Updating the README documentation  
+- Taking screenshots for the final submission  
+- Building the new **AI endpoint** (`/ai/mission-advice`) on top of it  
+
+> **Important**: This structure is our new **stable baseline**.  
+> All future weather-related features **must** use `get_weather_data()` — never call `requests.get()` directly again.
+
+---
+
+### Final Thought  
+This refactor turns our API from a messy, duplicated system into a clean, professional, and extensible architecture. It’s an essential foundation that will make adding AI and other exciting features much smoother during the rest of the hackathon.
+
+We’re building something great — step by step! 🚀
+
+---
 
 ---
 ![6](https://github.com/user-attachments/assets/6029742b-1825-4f76-a941-4236dcf97d4a)
