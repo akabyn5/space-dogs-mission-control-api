@@ -320,7 +320,7 @@ Why is this “useless hack” awesome?
 Because sometimes the best way to learn is by building something playful and pointless — just to see it work!
 This endpoint brings the spirit of Global Hack Week to life: quick, visual, and instantly satisfying. Every refresh feels like checking in on a spaceship flying through the cosmos.
 ---
-![6](https://github.com/user-attachments/assets/6029742b-1825-4f76-a941-4236dcf97d4a)
+
 
 Here’s a beautiful, engaging, and human-friendly English Markdown version:
 
@@ -330,7 +330,7 @@ Here’s a beautiful, engaging, and human-friendly English Markdown version:
 **“Teach your assistant”**
 
 ---
-<img width="526" height="278" alt="1" src="https://github.com/user-attachments/assets/f0078b47-4943-43d0-8b29-a50606079752" />
+
 <img width="883" height="304" alt="3" src="https://github.com/user-attachments/assets/8cad369c-14b6-4a2b-a81e-1d2e1bf49671" />
 
 Once the `/ai/mission-advice` endpoint is ready, **Maryfer** will:
@@ -374,6 +374,8 @@ This is where the project stops being just code and starts feeling like a real m
 
 
 **Ready for launch!** 🌠
+
+![6](https://github.com/user-attachments/assets/6029742b-1825-4f76-a941-4236dcf97d4a)
 
 This API is built to be simple, reliable, and fun — exactly what a great hackathon project needs.
 
