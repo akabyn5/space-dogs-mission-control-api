@@ -26,17 +26,18 @@ def get_weather_data(city):
         return None, {"error": "API key not configured"}
 
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric"
-    
+
     try:
-        response = requests.get(url)
+        response = requests.get(url, timeout=5)
+        response.raise_for_status()
         data = response.json()
-    except Exception as e:
+    except requests.exceptions.RequestException as e:
         return None, {
             "error": "Request failed",
             "details": str(e)
         }
 
-    if response.status_code != 200 or "main" not in data:
+    if "main" not in data or "wind" not in data:
         return None, {
             "error": "Failed to fetch weather data",
             "details": data
@@ -103,7 +104,12 @@ def mission_advice():
     data, error = get_weather_data(city)
 
     if error:
-        return jsonify(error), 500
+        return jsonify({
+            "city": city,
+            "advice": "Weather data unavailable. Cannot assess launch conditions.",
+            "temperature": None,
+            "wind_speed": None
+            }), 500
 
     wind = data["wind"]["speed"]
     temp = data["main"]["temp"]
