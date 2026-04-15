@@ -57,6 +57,396 @@ The main endpoint. Fetches live weather data and evaluates launch risk.
 
 ![4](https://github.com/user-attachments/assets/c8b5697b-9712-4d9e-adb4-d45eebf9bbe8)
 
+✅ Aquí tienes tu mensaje reformulado en **Markdown**, con un lenguaje bonito, humano y atractivo:
+
+---
+
+### 📊 **Endpoint: `/status/detailed`**
+
+**¿Qué hace?**  
+Este endpoint te entrega una **vista completa y detallada** del estado actual del sistema.  
+
+Te muestra todo lo importante de un solo vistazo:  
+- Métricas por componente  
+- Estado del caché  
+- Colas de mensajes  
+- Uso de recursos (CPU y RAM)  
+- La última telemetría recibida  
+
+Es ideal cuando quieres monitorear en profundidad cómo está funcionando todo.
+
+**Ejemplo de Request:**
+```http
+GET /status/detailed
+```
+
+**Ejemplo de Response:**
+```json
+{
+  "estado": "OPERATIVO",
+  "cpu_porcentaje": 23.4,
+  "ram_mb": 512,
+  "cola_mensajes": 0,
+  "cache_hit_rate": 0.95,
+  "ultimo_heartbeat": "2026-04-15T10:30:00Z"
+}
+```
+### 📊 **Endpoint: `/status/detailed`**
+
+**What does it do?**  
+This endpoint gives you a **comprehensive and detailed view** of the current system status.  
+
+It shows you everything important at a glance:  
+- Metrics per component  
+- Cache status  
+- Message queues  
+- Resource usage (CPU & RAM)  
+- Last received telemetry  
+
+Perfect when you need to monitor the system in depth.
+
+**Request Example:**
+```http
+GET /status/detailed
+```
+
+**Response Example:**
+```json
+{
+  "estado": "OPERATIVO",
+  "cpu_porcentaje": 23.4,
+  "ram_mb": 512,
+  "cola_mensajes": 0,
+  "cache_hit_rate": 0.95,
+  "ultimo_heartbeat": "2026-04-15T10:30:00Z"
+}
+```
+
+✅ Aquí tienes tu mensaje reformulado en **Markdown**, con un lenguaje bonito, humano y atractivo:
+
+---
+
+### 🌤️ **Endpoint: `/weather/launch-risk`**
+
+**¿Qué hace?**  
+Este endpoint evalúa las **condiciones meteorológicas** en tiempo real para ayudarte a tomar la mejor decisión antes de un lanzamiento.  
+
+Analiza variables clave como:  
+- Velocidad del viento  
+- Probabilidad de precipitación  
+- Nubosidad  
+- Riesgo de rayos  
+
+Y te devuelve un **nivel de riesgo** claro junto con la recomendación final para lanzar un **vehículo espacial** o **drone**.
+
+**Ejemplo de Request:**
+```http
+GET /weather/launch-risk?lat=-34.5&lon=-58.8&fecha=2026-04-20T14:00:00Z
+```
+
+**Ejemplo de Response:**
+```json
+{
+  "riesgo": "BAJO",
+  "viento_kts": 8,
+  "prob_lluvia": 0.05,
+  "decision": "AUTORIZADO"
+}
+```
+
+### 🌤️ **Endpoint: `/weather/launch-risk`**
+
+**What does it do?**  
+This endpoint evaluates **real-time weather conditions** to help you make the best decision before a launch.  
+
+It analyzes key variables such as:  
+- Wind speed  
+- Precipitation probability  
+- Cloud cover  
+- Lightning risk  
+
+And returns a **clear risk level** along with the final recommendation for launching a **space vehicle** or **drone**.
+
+**Request Example:**
+```http
+GET /weather/launch-risk?lat=-34.5&lon=-58.8&fecha=2026-04-20T14:00:00Z
+```
+
+**Response Example:**
+```json
+{
+  "riesgo": "BAJO",
+  "viento_kts": 8,
+  "prob_lluvia": 0.05,
+  "decision": "AUTORIZADO"
+}
+```
+
+✅ Aquí tienes tu mensaje reformulado en **Markdown**, con un lenguaje bonito, humano y atractivo:
+
+---
+
+### 🚀 **Endpoint: `/launch-decision`**
+
+**¿Qué hace?**  
+Este es el endpoint más importante del flujo de lanzamiento.  
+
+Integra en tiempo real la **telemetría del vehículo**, el **estado del sistema** y el **riesgo meteorológico** para entregar una **decisión final automatizada**:  
+
+**GO** (lanzamiento autorizado) o **NO-GO** (lanzamiento detenido).  
+
+Perfecto para sistemas autónomos o como apoyo inteligente al equipo de operaciones.
+
+**Ejemplo de Request:**
+```http
+POST /launch-decision
+```
+
+**Body:**
+```json
+{
+  "vehiculo_id": "Falcon-9",
+  "modo": "automatico"
+}
+```
+
+**Ejemplo de Response:**
+```json
+{
+  "decision": "GO",
+  "confianza": 0.97,
+  "motivo": "Todos los sistemas OK y clima favorable"
+}
+```
+
+### 🚀 **Endpoint: `/launch-decision`**
+
+**What does it do?**  
+This is the most critical endpoint in the entire launch workflow.  
+
+It combines **vehicle telemetry**, **system status**, and **weather risk** in real time to deliver an **automated final decision**:  
+
+**GO** (launch authorized) or **NO-GO** (launch aborted).  
+
+Ideal for autonomous systems or as smart support for the operations team.
+
+**Request Example:**
+```http
+POST /launch-decision
+```
+
+**Body:**
+```json
+{
+  "vehiculo_id": "Falcon-9",
+  "modo": "automatico"
+}
+```
+
+**Response Example:**
+```json
+{
+  "decision": "GO",
+  "confianza": 0.97,
+  "motivo": "Todos los sistemas OK y clima favorable"
+}
+```
+### 🤖 **Endpoint:  /telemetry/simulated
+
+<img width="526" height="278" alt="1" src="https://github.com/user-attachments/assets/cb104b8e-05a4-40dc-9dd5-a8d0129a29ee" />
+
+✨ What is this endpoint?
+The /telemetry/simulated endpoint is a fun, simulated telemetry service for our Space Dogs mission.
+Every time you refresh the page or make a new request, it generates completely random values for:
+
+Altitude (in kilometers)
+Velocity (in km/h)
+Spacecraft Status
+
+These values change dynamically with every request to simulate the ever-changing conditions of a real spaceflight.
+
+⚠️ Important Note
+The data shown is entirely fictional and randomly generated.
+It does not represent real spacecraft telemetry.
+Its only purpose is demonstration, testing, and pure hackathon fun!
+
+Ejemplo request:
+
+json
+POST /telemetry/simulated
+{
+  "tipo": "drone",
+  "desde": "2025-01-01T00:00:00Z",
+  "hasta": "2025-01-01T01:00:00Z",
+  "intervalo_segundos": 10
+}
+
+Ejemplo response:
+
+json
+{
+  "serie": [
+    {"timestamp": "2025-01-01T00:00:00Z", "lat": -34.5, "lon": -58.8, "altura_m": 120, "temp_c": 22.3},
+    {"timestamp": "2025-01-01T00:00:10Z", "lat": -34.51, "lon": -58.79, "altura_m": 121, "temp_c": 22.4}
+  ]
+}
+**“Teach your assistant”**
+
+---
+
+<img width="883" height="304" alt="3" src="https://github.com/user-attachments/assets/8cad369c-14b6-4a2b-a81e-1d2e1bf49671" />
+
+Once the `/ai/mission-advice` endpoint is ready, **Maryfer** will:
+
+### 🎯 What to do:
+
+**Test the endpoint by visiting:**
+
+```
+http://127.0.0.1:5000/ai/mission-advice?city=Panama
+```
+
+---
+
+### ✨ What is this endpoint?
+
+The **`/ai/mission-advice`** endpoint is a smart AI-powered assistant for our Space Dogs mission.
+
+It takes real weather data for any city and transforms it into **clear, human-friendly launch recommendations**.
+
+Instead of just showing raw numbers (temperature and wind speed), the AI interprets the conditions and gives practical advice — just like a real mission control expert would.
+
+---
+
+### 🤖 **Endpoint: `/ai/mission-advice`**
+
+**¿Qué hace?**  
+Este endpoint utiliza **inteligencia artificial generativa** para darte recomendaciones inteligentes y precisas en tiempo real.  
+
+Analiza datos históricos y telemetría simulada para sugerirte:  
+- Ajustes de trayectoria  
+- Mejores ventanas de lanzamiento  
+- Acciones correctivas ante cualquier anomalía  
+
+¡Es como tener un ingeniero de misión experto siempre disponible para ayudarte!
+
+**Ejemplo de Request:**
+```http
+POST /ai/mission-advice
+```
+
+**Body:**
+```json
+{
+  "mision": "orbital",
+  "fase": "ascenso",
+  "anomalias": ["temp_alta"]
+}
+```
+
+
+---
+### 🤖 **Endpoint: `/ai/mission-advice`**
+
+**What does it do?**  
+This endpoint uses **generative artificial intelligence** to provide smart and precise real-time recommendations.  
+
+It analyzes historical data and simulated telemetry to suggest:  
+- Trajectory adjustments  
+- Optimal launch windows  
+- Corrective actions for any anomalies  
+
+It's like having an expert mission engineer always by your side!
+
+**Request Example:**
+```http
+POST /ai/mission-advice
+```
+
+**Body:**
+```json
+{
+  "mision": "orbital",
+  "fase": "ascenso",
+  "anomalias": ["temp_alta"]
+}
+```
+
+**Response Example:**
+```json
+{
+  "recomendacion": "Reducir empuje 8% durante 12s para compensar sobrecalentamiento",
+  "confianza": 0.85
+}
+```
+---
+
+### 📍 **Endpoint: `/mission/status`**
+
+**¿Qué hace?**  
+Este endpoint te mantiene siempre informado sobre el **estado en tiempo real** de la misión activa.  
+
+Te muestra de forma clara y completa:  
+- La fase actual de la misión  
+- El progreso alcanzado  
+- El tiempo transcurrido  
+- Los hitos ya completados  
+- Cualquier desviación respecto al plan original  
+
+Ideal para seguir el desarrollo de la misión segundo a segundo.
+
+**Ejemplo de Request:**
+```http
+GET /mission/status?id=mission-2026-01
+```
+
+**Ejemplo de Response:**
+```json
+{
+  "fase": "ASCENSO",
+  "progreso": 0.32,
+  "desviacion_segundos": 2.1,
+  "hito_actual": "SEPARACION_ETAPA1",
+  "estado": "NOMINAL"
+}
+```
+
+---
+
+
+### 📍 **Endpoint: `/mission/status`**
+
+**What does it do?**  
+This endpoint keeps you always up to date with the **real-time status** of the active mission.  
+
+It clearly shows you:  
+- The current mission phase  
+- Progress achieved  
+- Time elapsed  
+- Milestones completed  
+- Any deviations from the nominal plan  
+
+Perfect for following the mission second by second.
+
+**Request Example:**
+```http
+GET /mission/status?id=mission-2026-01
+```
+
+**Response Example:**
+```json
+{
+  "fase": "ASCENSO",
+  "progreso": 0.32,
+  "desviacion_segundos": 2.1,
+  "hito_actual": "SEPARACION_ETAPA1",
+  "estado": "NOMINAL"
+}
+```
+
+
+
+
 ## 📅 Project Status
 
 **In Development** — Day 1 of MLH Global Hack Week: APIs
@@ -288,64 +678,8 @@ This refactor turns our API from a messy, duplicated system into a clean, profes
 
 We’re building something great — step by step! 🚀
 
----
-🚀 Submission 1 — Telemetry
-“Build a useless hack”
+--
 
-<img width="526" height="278" alt="1" src="https://github.com/user-attachments/assets/cb104b8e-05a4-40dc-9dd5-a8d0129a29ee" />
-
-
-
-When José finishes implementing the /telemetry/simulated endpoint, Maryfer takes over and does the following:
-🎯 What to do:
-Open your browser and visit:
-texthttp://127.0.0.1:5000/telemetry/simulated
-
-✨ What is this endpoint?
-The /telemetry/simulated endpoint is a fun, simulated telemetry service for our Space Dogs mission.
-Every time you refresh the page or make a new request, it generates completely random values for:
-
-Altitude (in kilometers)
-Velocity (in km/h)
-Spacecraft Status
-
-These values change dynamically with every request to simulate the ever-changing conditions of a real spaceflight.
-
-⚠️ Important Note
-The data shown is entirely fictional and randomly generated.
-It does not represent real spacecraft telemetry.
-Its only purpose is demonstration, testing, and pure hackathon fun!
-
----
-
-# 🚀 Submission 2 — AI Endpoint  
-**“Teach your assistant”**
-
----
-
-<img width="883" height="304" alt="3" src="https://github.com/user-attachments/assets/8cad369c-14b6-4a2b-a81e-1d2e1bf49671" />
-
-Once the `/ai/mission-advice` endpoint is ready, **Maryfer** will:
-
-### 🎯 What to do:
-
-**Test the endpoint by visiting:**
-
-```
-http://127.0.0.1:5000/ai/mission-advice?city=Panama
-```
-
----
-
-### ✨ What is this endpoint?
-
-The **`/ai/mission-advice`** endpoint is a smart AI-powered assistant for our Space Dogs mission.
-
-It takes real weather data for any city and transforms it into **clear, human-friendly launch recommendations**.
-
-Instead of just showing raw numbers (temperature and wind speed), the AI interprets the conditions and gives practical advice — just like a real mission control expert would.
-
----
 
 ### 📸 What Maryfer will do:
 
