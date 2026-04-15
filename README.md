@@ -289,7 +289,35 @@ This refactor turns our API from a messy, duplicated system into a clean, profes
 We’re building something great — step by step! 🚀
 
 ---
+🚀 Submission 1 — Telemetry
+“Build a useless hack”
 
+imagen 
+
+
+When José finishes implementing the /telemetry/simulated endpoint, Maryfer takes over and does the following:
+🎯 What to do:
+Open your browser and visit:
+texthttp://127.0.0.1:5000/telemetry/simulated
+
+✨ What is this endpoint?
+The /telemetry/simulated endpoint is a fun, simulated telemetry service for our Space Dogs mission.
+Every time you refresh the page or make a new request, it generates completely random values for:
+
+Altitude (in kilometers)
+Velocity (in km/h)
+Spacecraft Status
+
+These values change dynamically with every request to simulate the ever-changing conditions of a real spaceflight.
+
+⚠️ Important Note
+The data shown is entirely fictional and randomly generated.
+It does not represent real spacecraft telemetry.
+Its only purpose is demonstration, testing, and pure hackathon fun!
+
+Why is this “useless hack” awesome?
+Because sometimes the best way to learn is by building something playful and pointless — just to see it work!
+This endpoint brings the spirit of Global Hack Week to life: quick, visual, and instantly satisfying. Every refresh feels like checking in on a spaceship flying through the cosmos.
 ---
 ![6](https://github.com/user-attachments/assets/6029742b-1825-4f76-a941-4236dcf97d4a)
 
