@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Launch Risk Checker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
+  <style>
+    /* ── Design tokens ────────────────────────────────── */
+    :root {
+      --bg:        #050a0f;
+      --panel:     #0a1520;
+      --border:    #1a3a50;
+      --accent:    #00d4ff;
+      --accent2:   #ff4d4d;
+      --green:     #00ff88;
+      --yellow:    #ffd700;
+      --text:      #c8e6f0;
+      --dim:       #4a7a90;
+      --glow:      0 0 20px rgba(0, 212, 255, 0.4);
+      --font-mono: 'Share Tech Mono', monospace;
+      --font-head: 'Orbitron', sans-serif;
+    }
+
+    /* ── Reset & base ─────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      padding: 2rem 1rem;
+    }
+
+    /* ── Starfield background ─────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 50% 70%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 80% 15%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 10% 85%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 65% 45%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 35% 55%, rgba(0,212,255,0.3) 0%, transparent 100%),
+        radial-gradient(2px 2px at 90% 60%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 45% 10%, rgba(255,255,255,0.6) 0%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Subtle grid overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Card container ───────────────────────────────── */
+    .card {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 560px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 0 60px rgba(0,212,255,0.08), inset 0 1px 0 rgba(0,212,255,0.1);
+      animation: fadeIn 0.6s ease both;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Corner accents */
+    .card::before, .card::after {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-color: var(--accent);
+      border-style: solid;
+    }
+    .card::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+    .card::after  { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+    /* ── Header ───────────────────────────────────────── */
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .header-tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      color: var(--dim);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .header h1 {
+      font-family: var(--font-head);
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: 0.05em;
+      text-shadow: var(--glow);
+    }
+
+    .header h1 span { color: var(--accent); }
+
+    .header-line {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      margin-top: 1.2rem;
+      opacity: 0.5;
+    }
+
+    /* ── Input section ────────────────────────────────── */
+    .input-group {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .input-wrap {
+      flex: 1;
+      position: relative;
+    }
+
+    .input-label {
+      display: block;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--dim);
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      background: rgba(0,212,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      padding: 0.7rem 1rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      letter-spacing: 0.05em;
+    }
+
+    input[type="text"]::placeholder { color: var(--dim); }
+
+    input[type="text"]:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(0,212,255,0.12), var(--glow);
+    }
+
+    /* ── Button ───────────────────────────────────────── */
+    button {
+      align-self: flex-end;
+      font-family: var(--font-head);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--accent);
+      border: none;
+      border-radius: 3px;
+      padding: 0.75rem 1.2rem;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+      white-space: nowrap;
+    }
+
+    button:hover {
+      background: #33ddff;
+      box-shadow: 0 0 20px rgba(0,212,255,0.5);
+    }
+
+    button:active { transform: scale(0.97); }
+
+    button:disabled {
+      background: var(--border);
+      color: var(--dim);
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* ── Status bar ───────────────────────────────────── */
+    .status-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.7rem;
+      color: var(--dim);
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--dim);
+      transition: background 0.3s;
+      flex-shrink: 0;
+    }
+    .status-dot.loading { background: var(--yellow); animation: pulse 0.8s infinite; }
+    .status-dot.ok      { background: var(--green); }
+    .status-dot.error   { background: var(--accent2); }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+
+    /* ── Result panel ─────────────────────────────────── */
+    .result-panel {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 1.2rem;
+      min-height: 80px;
+      transition: border-color 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .result-panel.has-data { border-color: rgba(0,212,255,0.3); }
+    .result-panel.has-error { border-color: rgba(255,77,77,0.4); }
+
+    /* Risk level badge */
+    .risk-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 2px;
+      font-family: var(--font-head);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .risk-badge.LOW    { background: rgba(0,255,136,0.12); color: var(--green);   border: 1px solid rgba(0,255,136,0.3); }
+    .risk-badge.MEDIUM { background: rgba(255,215,0,0.12);  color: var(--yellow);  border: 1px solid rgba(255,215,0,0.3); }
+    .risk-badge.HIGH   { background: rgba(255,77,77,0.12);  color: var(--accent2); border: 1px solid rgba(255,77,77,0.3); }
+
+    /* Structured fields */
+    .data-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+    }
+
+    .data-field { display: flex; flex-direction: column; gap: 0.15rem; }
+
+    .data-key {
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: var(--dim);
+      text-transform: uppercase;
+    }
+
+    .data-val {
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+
+    /* Raw JSON fallback */
+    .raw-json {
+      font-size: 0.8rem;
+      color: var(--accent);
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .empty-hint {
+      color: var(--dim);
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-align: center;
+      padding: 1rem 0;
+    }
+
+    .error-msg {
+      color: var(--accent2);
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Footer ───────────────────────────────────────── */
+    .footer {
+      margin-top: 1.2rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      color: var(--dim);
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-tag">Mission Control · Weather Analysis</div>
+    <h1>🚀 Launch <span>Risk</span></h1>
+    <div class="header-line"></div>
+  </div>
+
+  <!-- Input -->
+  <div class="input-group">
+    <div class="input-wrap">
+      <label class="input-label" for="city">Target City</label>
+      <input type="text" id="city" placeholder="e.g. Cape Canaveral" autocomplete="off"
+             onkeydown="if(event.key==='Enter') getRisk()" />
+    </div>
+    <button id="btn" onclick="getRisk()">Analyze</button>
+  </div>
+
+  <!-- Status bar -->
+  <div class="status-bar">
+    <div class="status-dot" id="statusDot"></div>
+    <span id="statusText">Awaiting input</span>
+  </div>
+
+  <!-- Result -->
+  <div class="result-panel" id="resultPanel">
+    <div class="empty-hint">[ Enter a city to begin risk assessment ]</div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <span>SYS: ONLINE</span>
+    <span id="timestamp">—</span>
+  </div>
+
+</div>
+
+<script>
+  // ── Helpers ──────────────────────────────────────────
+  const $ = id => document.getElementById(id);
+
+  function setStatus(type, text) {
+    const dot = $('statusDot');
+    dot.className = 'status-dot' + (type ? ' ' + type : '');
+    $('statusText').textContent = text;
+  }
+
+  function updateTimestamp() {
+    $('timestamp').textContent = new Date().toLocaleTimeString('en-US', { hour12: false });
+  }
+
+  // Risk level → badge class (tries to detect keyword in response)
+  function detectRisk(data) {
+    const str = JSON.stringify(data).toUpperCase();
+    if (str.includes('"HIGH"') || str.includes('HIGH_RISK') || str.includes('RIESGO_ALTO')) return 'HIGH';
+    if (str.includes('"MEDIUM"') || str.includes('MEDIUM_RISK') || str.includes('RIESGO_MEDIO')) return 'MEDIUM';
+    if (str.includes('"LOW"') || str.includes('LOW_RISK')  || str.includes('RIESGO_BAJO'))  return 'LOW';
+    return null;
+  }
+
+  // Render a nice structured view when possible, else pretty-print JSON
+  function renderResult(data) {
+    const panel = $('resultPanel');
+    panel.className = 'result-panel has-data';
+
+    const risk = detectRisk(data);
+    let html = '';
+
+    // Risk badge if detectable
+    if (risk) {
+      const icons = { LOW: '✅', MEDIUM: '⚠️', HIGH: '🔴' };
+      html += `<div class="risk-badge ${risk}">${icons[risk]} Risk: ${risk}</div>`;
+    }
+
+    // Try to show key-value fields in a clean grid
+    if (typeof data === 'object' && !Array.isArray(data)) {
+      html += '<div class="data-grid">';
+      for (const [key, val] of Object.entries(data)) {
+        const label = key.replace(/_/g, ' ');
+        html += `
+          <div class="data-field">
+            <span class="data-key">${label}</span>
+            <span class="data-val">${val}</span>
+          </div>`;
+      }
+      html += '</div>';
+    } else {
+      // Fallback: coloured pretty JSON
+      html += `<pre class="raw-json">${JSON.stringify(data, null, 2)}</pre>`;
+    }
+
+    panel.innerHTML = html;
+  }
+
+  // ── Main function ────────────────────────────────────
+  async function getRisk() {
+    const city = $('city').value.trim();
+    if (!city) { setStatus('error', 'City field is empty'); return; }
+
+    const btn = $('btn');
+    btn.disabled = true;
+    setStatus('loading', `Fetching data for "${city}"…`);
+    updateTimestamp();
+
+    const panel = $('resultPanel');
+    panel.className = 'result-panel';
+    panel.innerHTML = '<div class="empty-hint">[ Processing… ]</div>';
+
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:5000/weather/launch-risk?city=${encodeURIComponent(city)}`
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status} — ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      renderResult(data);
+      setStatus('ok', `Assessment complete · ${new Date().toLocaleTimeString()}`);
+
+    } catch (err) {
+      panel.className = 'result-panel has-error';
+      panel.innerHTML = `<div class="error-msg">⚠ ${err.message}</div>`;
+      setStatus('error', 'Request failed');
+    } finally {
+      btn.disabled = false;
+      updateTimestamp();
+    }
+  }
+</script>
+</body>
+</html>
