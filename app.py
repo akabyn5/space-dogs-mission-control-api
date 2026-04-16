@@ -2,8 +2,10 @@ from flask import Flask, jsonify, request
 import requests
 import os
 import random
+from flask_cors import CORS          # ← importa CORS
 
 app = Flask(__name__)
+CORS(app)                            # ← activa CORS para toda la app
 
 API_KEY = os.getenv("OPENWEATHER_KEY")
 
