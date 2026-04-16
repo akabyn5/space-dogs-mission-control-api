@@ -90,6 +90,11 @@ GET /status/detailed
 
 ### 🌤️ **Endpoint: `/weather/launch-risk`**
 
+<img width="858" height="662" alt="6" src="https://github.com/user-attachments/assets/d9bd75fb-176e-435f-a1a1-f3eaee881f32" />
+
+
+
+
 **What does it do?**  
 This endpoint evaluates **real-time weather conditions** to help you make the best decision before a launch.  
 
