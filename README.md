@@ -57,9 +57,7 @@ The main endpoint. Fetches live weather data and evaluates launch risk.
 
 ![4](https://github.com/user-attachments/assets/c8b5697b-9712-4d9e-adb4-d45eebf9bbe8)
 
-✅ Aquí tienes tu mensaje reformulado en **Markdown**, con un lenguaje bonito, humano y atractivo:
 
----
 
 ### 📊 **Endpoint: `/status/detailed`**
 
@@ -122,7 +120,6 @@ GET /status/detailed
 }
 ```
 
-✅ Aquí tienes tu mensaje reformulado en **Markdown**, con un lenguaje bonito, humano y atractivo:
 
 ---
 
@@ -181,8 +178,6 @@ GET /weather/launch-risk?lat=-34.5&lon=-58.8&fecha=2026-04-20T14:00:00Z
   "decision": "AUTORIZADO"
 }
 ```
-
-✅ Aquí tienes tu mensaje reformulado en **Markdown**, con un lenguaje bonito, humano y atractivo:
 
 ---
 
@@ -290,6 +285,8 @@ json
     {"timestamp": "2025-01-01T00:00:10Z", "lat": -34.51, "lon": -58.79, "altura_m": 121, "temp_c": 22.4}
   ]
 }
+
+
 **“Teach your assistant”**
 
 ---
@@ -443,31 +440,7 @@ GET /mission/status?id=mission-2026-01
   "estado": "NOMINAL"
 }
 ```
-POR QUÉ existen los componentes
-(10 minutos)
-Ahora que ya conoces todos los endpoints, es momento de entender por qué cada uno existe y cómo encajan entre sí.
-Piensa en este sistema como un equipo de misión bien coordinado. Cada componente tiene un rol claro y necesario:
-Telemetría
-Simula datos realistas de la nave (posición, velocidad, temperatura, presión, etc.).
-Su objetivo es dar contexto realista a toda la misión y alimentar al resto de los endpoints sin necesidad de hardware físico.
-Inteligencia Artificial (IA)
-Toma los datos crudos de telemetría y condiciones ambientales, y los transforma en recomendaciones accionables.
-Convierte números fríos en apoyo inteligente para la toma de decisiones: ajustar trayectoria, corregir anomalías o elegir la mejor ventana de lanzamiento.
-
-Componentes justificados:
-
-/telemetry/simulated → La fuente de datos que hace posible todo lo demás.
-/weather/launch-risk → Proporciona el contexto ambiental crítico para cualquier lanzamiento.
-/status y /status/detailed → Monitorean la salud general del sistema en tiempo real.
-/launch-decision → La orquestación lógica que integra todo y da el veredicto final (GO / NO-GO).
-/ai/mission-advice → La inteligencia aplicada que ofrece recomendaciones expertas.
-/mission/status → Permite el seguimiento claro del progreso y ejecución de la misión.
-
-
-English Version:
-
-Step 6 — Explain WHY the components exist
-(10 minutes)
+##📍 Explain WHY the components exist
 Now that you know all the endpoints, it’s time to understand why each one exists and how they work together.
 Imagine this system as a well-coordinated mission team. Every component has a clear and essential role:
 Telemetry
